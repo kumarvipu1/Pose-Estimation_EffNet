@@ -51,8 +51,8 @@ def get_rmse(loader, model, loss_fn, device):
 
         # forward
         scores = model(data)
-        loss = loss_fn(scores[targets != -1], targets[targets != -1])
-        num_examples += scores[targets != -1].shape[0]
+        loss = loss_fn(scores, targets)
+        num_examples += scores.shape[0]
         losses.append(loss.item())
 
     model.train()
