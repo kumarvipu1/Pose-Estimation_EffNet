@@ -1,7 +1,6 @@
 import torch
-import albumentations as A
-from albumentations.pytorch import ToTensorV2
-import cv2
+# import albumentations as A
+# from albumentations.pytorch import ToTensorV2
 import numpy as np
 from skimage import io, transform
 
@@ -17,6 +16,7 @@ SAVE_MODEL = True
 LOAD_MODEL = True
 
 # Data augmentation for images
+'''
 train_transforms = A.Compose(
     [
         A.Resize(width=96, height=96),
@@ -43,7 +43,9 @@ val_transforms = A.Compose(
         ToTensorV2(),
     ], keypoint_params=A.KeypointParams(format="xy", remove_invisible=False),
 )
+'''
 
+# Alternate Data Augumentation
 class Rescale(object):
     """Rescale the image in a sample to a given size.
 
