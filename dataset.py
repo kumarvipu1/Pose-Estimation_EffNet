@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import numpy as np
-import pickle
+import pickle5 as pickle
 # Ignore warning
 import warnings
 warnings.filterwarnings("ignore")
