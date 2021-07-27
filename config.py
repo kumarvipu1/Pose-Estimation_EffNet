@@ -126,8 +126,6 @@ class ToTensor(object):
         # torch image: C X H X W
         image = image.transpose((2, 0, 1))
         image = torch.from_numpy(image)
-        image = image.type(torch.DoubleTensor)
         keypoints = torch.from_numpy(keypoints)
-        keypoints = keypoints.type(torch.DoubleTensor)
         return {'image': image,
                 'keypoints': keypoints}
