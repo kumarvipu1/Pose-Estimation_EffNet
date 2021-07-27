@@ -28,9 +28,8 @@ def train_one_epoch(loader, model, optimizer, loss_fn, scaler, device):
 
         # forward
         scores = model(data)
-        scores[targets == -1] = -1
         loss = loss_fn(scores, targets)
-        num_examples += torch.numel(scores[targets != -1])
+        num_examples += torch.numel(scores)
         losses.append(loss.item())
 
         # backward
@@ -117,7 +116,7 @@ def main():
     '''
 
     for epoch in range(config.NUM_EPOCHS):
-        get_rmse(val_loader, model, loss_fn, config.DEVICE)
+        #get_rmse(val_loader, model, loss_fn, config.DEVICE)
         train_one_epoch(train_loader, model, optimizer, loss_fn, scaler, config.DEVICE)
 
         # get on validation
