@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 import numpy as np
-import pickle5 as pickle
+import pickle5 as pickle # only works in Google Colab
 # Ignore warning
 import warnings
 warnings.filterwarnings("ignore")
@@ -20,16 +20,6 @@ class LoadData(Dataset):
             kp = pickle.load(handle)
         self.data = kp
         self.root_dir = root_dir
-        self.category_names = ['left_eye_center_x', 'left_eye_center_y',
-                               'right_eye_center_x', 'right_eye_center_y', 'left_eye_inner_corner_x',
-                               'left_eye_inner_corner_y', 'left_eye_outer_corner_x', 'left_eye_outer_corner_y',
-                               'right_eye_inner_corner_x', 'right_eye_inner_corner_y', 'right_eye_outer_corner_x',
-                               'right_eye_outer_corner_y', 'left_eyebrow_inner_end_x', 'left_eyebrow_inner_end_y',
-                               'left_eyebrow_outer_end_x', 'left_eyebrow_outer_end_y', 'right_eyebrow_inner_end_x',
-                               'right_eyebrow_inner_end_y', 'right_eyebrow_outer_end_x', 'right_eyebrow_outer_end_y',
-                               'nose_tip_x', 'nose_tip_y', 'mouth_left_corner_x', 'mouth_left_corner_y',
-                               'mouth_right_corner_x', 'mouth_right_corner_y', 'mouth_center_top_lip_x',
-                               'mouth_center_top_lip_y', 'mouth_center_bottom_lip_x', 'mouth_center_bottom_lip_y']
         self.transform = transform
         self.train = train
 
@@ -43,6 +33,7 @@ class LoadData(Dataset):
         kpt = self.data['keypoint'][idx]
         # landmarks = np.array([landmarks])
         kpt = kpt.astype('float')
+        kpt = kpt.flatten()
         sample = {'image': image, 'keypoints': kpt}
 
         if self.transform:
@@ -63,8 +54,9 @@ def show_landmarks_batch(sample_batched):
     plt.imshow(grid.numpy().transpose((1, 2, 0)))
 
     for i in range(batch_size):
-        plt.scatter(landmarks_batch[i, :, 0].numpy() + i * im_size,
-                    landmarks_batch[i, :, 1].numpy(),
+        for j in range(1, 43, 2):
+            plt.scatter(landmarks_batch[i, j-1] + i * im_size,
+                    landmarks_batch[i, j],
                     s=10, marker='.', c='r')
 
         plt.title('Batch from dataloader')

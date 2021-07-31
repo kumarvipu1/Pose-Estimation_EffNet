@@ -77,7 +77,10 @@ class Rescale(object):
 
         # h and w are swapped for keypoints because for images,
         # x and y axes are axis 1 and 0 respectively
-        keypoints = keypoints * [new_w / w, new_h / h]
+        #keypoints = keypoints * [new_w / w, new_h / h]
+        keypoints_new = np.reshape(keypoints, (-1, 2))
+        keypoints_new = keypoints_new * [new_w / w, new_h / h]
+        keypoints = keypoints_new.flatten()
 
         return {'image': img, 'keypoints': keypoints}
 
@@ -110,7 +113,10 @@ class RandomCrop(object):
         image = image[top: top + new_h,
                       left: left + new_w]
 
-        keypoints = keypoints - [left, top]
+        #keypoints = keypoints - [left, top]
+        keypoints_new = np.reshape(keypoints, (-1, 2))
+        keypoints_new = keypoints_new - [left, top]
+        keypoints = keypoints_new.flatten()
 
         return {'image': image, 'keypoints': keypoints}
 
