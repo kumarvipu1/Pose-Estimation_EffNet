@@ -30,6 +30,7 @@ class LoadData(Dataset):
         img_name = os.path.join(self.root_dir,
                                 self.data['image'][idx])
         image = io.imread(img_name)
+        image = image.float()
         kpt = self.data['keypoint'][idx]
         # landmarks = np.array([landmarks])
         kpt = kpt.astype('float')
