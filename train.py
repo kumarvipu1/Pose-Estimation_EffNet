@@ -11,7 +11,6 @@ from utils import (
     load_checkpoint,
     save_checkpoint,
     get_rmse,
-    get_submission
 )
 
 
@@ -116,7 +115,7 @@ def main():
     '''
 
     for epoch in range(config.NUM_EPOCHS):
-        #get_rmse(val_loader, model, loss_fn, config.DEVICE)
+        get_rmse(val_loader, model, loss_fn, config.DEVICE)
         train_one_epoch(train_loader, model, optimizer, loss_fn, scaler, config.DEVICE)
 
         # get on validation

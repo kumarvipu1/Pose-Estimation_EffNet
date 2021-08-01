@@ -38,15 +38,15 @@ def get_submission(loader, dataset, model_15, model_4):
 
 
 def get_rmse(loader, model, loss_fn, device):
-    model.double()
     model.eval()
     num_examples = 0
     losses = []
     for batch_idx, sample_batched in enumerate(loader):
         data = sample_batched['image']
-        data = data.double()
+        data = data.float()
         data = data.to(device=device)
         targets = sample_batched['keypoints']
+        targets = targets.float()
         targets = targets.to(device=device)
 
         # forward
