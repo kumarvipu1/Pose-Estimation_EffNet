@@ -7,10 +7,10 @@ from skimage import io, transform
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 LEARNING_RATE = 1e-4
 WEIGHT_DECAY = 5e-4
-BATCH_SIZE = 64
-NUM_EPOCHS = 100
-NUM_WORKERS = 4
-CHECKPOINT_FILE = "b0_4.pth.tar"
+BATCH_SIZE = 32
+NUM_EPOCHS = 150
+NUM_WORKERS = 8
+CHECKPOINT_FILE = "b0_new.pth.tar"
 PIN_MEMORY = True
 SAVE_MODEL = True
 LOAD_MODEL = True
@@ -131,7 +131,7 @@ class ToTensor(object):
         # numpy image: H x W x C
         # torch image: C X H X W
         image = image.transpose((2, 0, 1))
-        
+
         image = torch.from_numpy(image).float()
         keypoints = torch.from_numpy(keypoints).float()
         return {'image': image,

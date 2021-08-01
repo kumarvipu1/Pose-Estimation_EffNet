@@ -38,7 +38,7 @@ def train_one_epoch(loader, model, optimizer, loss_fn, scaler, device):
 
     print(f"Loss average over epoch: {(sum(losses)/num_examples)**0.5}")
 
-
+'''
 def main():
     train_ds = LoadData(
         root_dir= 'C:/Users/44745/Desktop/Facial Keypoint Detection Competition/data/train_data/images',
@@ -90,6 +90,7 @@ def main():
         pin_memory=config.PIN_MEMORY,
         shuffle=False,
     )
+    
     loss_fn = nn.MSELoss(reduction="sum")
     model = EfficientNet.from_pretrained("efficientnet-b0")
     model._fc = nn.Linear(1280, 42)
@@ -97,7 +98,6 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=config.LEARNING_RATE, weight_decay=config.WEIGHT_DECAY)
     scaler = torch.cuda.amp.GradScaler()
 
-    '''
     model_4 = EfficientNet.from_pretrained("efficientnet-b0")
     model_4._fc = nn.Linear(1280, 42)
     model_15 = EfficientNet.from_pretrained("efficientnet-b0")
@@ -112,7 +112,7 @@ def main():
         load_checkpoint(torch.load("b0_15.pth.tar"), model_15, optimizer, config.LEARNING_RATE)
 
     get_submission(test_loader, test_ds, model_15, model_4)
-    '''
+ 
 
     for epoch in range(config.NUM_EPOCHS):
         get_rmse(val_loader, model, loss_fn, config.DEVICE)
@@ -125,6 +125,9 @@ def main():
                 "optimizer": optimizer.state_dict(),
             }
             save_checkpoint(checkpoint, filename=config.CHECKPOINT_FILE)
-
+'''
+'''
 if __name__ == "__main__":
     main()
+
+'''
