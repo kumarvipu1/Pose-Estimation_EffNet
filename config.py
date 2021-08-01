@@ -131,8 +131,16 @@ class ToTensor(object):
         # numpy image: H x W x C
         # torch image: C X H X W
         image = image.transpose((2, 0, 1))
-
+        # normalization
+        ##
+        MEAN = 255 * torch.tensor([0.485, 0.456, 0.406])
+        STD = 255 * torch.tensor([0.229, 0.224, 0.225])
+        ##
         image = torch.from_numpy(image).float()
+        ##
+        image = image.permute(-1, 0, 1)
+        image = (image - MEAN[:, None, None]) / STD[:, None, None]
+        ##
         keypoints = torch.from_numpy(keypoints).float()
         return {'image': image,
                 'keypoints': keypoints}
