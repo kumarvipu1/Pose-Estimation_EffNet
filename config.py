@@ -16,36 +16,7 @@ SAVE_MODEL = True
 LOAD_MODEL = True
 
 # Data augmentation for images
-'''
-train_transforms = A.Compose(
-    [
-        A.Resize(width=96, height=96),
-        A.Rotate(limit=15, border_mode=cv2.BORDER_CONSTANT, p=0.8),
-        A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=0, p=0.2, border_mode=cv2.BORDER_CONSTANT),
-        A.Normalize(
-            mean=[0.4897, 0.4897, 0.4897],
-            std=[0.2330, 0.2330, 0.2330],
-            max_pixel_value=255.0,
-        ),
-        ToTensorV2(),
-    ], keypoint_params=A.KeypointParams(format="xy", remove_invisible=False),
-)
 
-
-val_transforms = A.Compose(
-    [
-        A.Resize(height=96, width=96),
-        A.Normalize(
-            mean=[0.4897, 0.4897, 0.4897],
-            std=[0.2330, 0.2330, 0.2330],
-            max_pixel_value=255.0,
-        ),
-        ToTensorV2(),
-    ], keypoint_params=A.KeypointParams(format="xy", remove_invisible=False),
-)
-'''
-
-# Alternate Data Augumentation
 class Rescale(object):
     """Rescale the image in a sample to a given size.
 
@@ -130,17 +101,8 @@ class ToTensor(object):
         # swap color axis because
         # numpy image: H x W x C
         # torch image: C X H X W
-        image = image.transpose((2, 0, 1))
-        # normalization
-        ##
-        MEAN = 255 * torch.tensor([0.485, 0.456, 0.406])
-        STD = 255 * torch.tensor([0.229, 0.224, 0.225])
-        ##
-        image = torch.from_numpy(image).float()
-        ##
-        image = image.permute(-1, 0, 1)
-        image = (image - MEAN[:, None, None]) / STD[:, None, None]
-        ##
-        keypoints = torch.from_numpy(keypoints).float()
+        image = image.transpose((2, 0, 1))/255
+        image = torch.from_numpy(image).to(torch.float)
+        keypoints = torch.from_numpy(keypoints).to(torch.float)
         return {'image': image,
                 'keypoints': keypoints}

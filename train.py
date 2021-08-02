@@ -20,7 +20,7 @@ def train_one_epoch(loader, model, optimizer, loss_fn, scaler, device):
     num_examples = 0
     for batch_idx, sample_batched in enumerate(loop):
         data = sample_batched['image']
-        data = data.float()
+        data = data.to(torch.float)
         data = data.to(device=device)
         targets = sample_batched['keypoints']
         targets = targets.to(device=device)
